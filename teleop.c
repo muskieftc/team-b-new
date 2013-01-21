@@ -76,12 +76,20 @@ task main()
 		else {
 			liftSpeed = joystick.joy2_y1;
 		}
-		
+
 		motor[liftMotor] = liftSpeed;
 		//End lift controls
 
 		//Start servo controls
-		
+		if((joy2Btn(5)) && (!joy2Btn(6))) {
+			servo[servoA] = 0;
+		}
+		else if((joy2Btn(6)) && (!joy2Btn(5))) {
+			servo[servoA] = 255;
+		}
+		else {
+			servo[servoA] = ServoValue[servoA];
+		}
 
 
 		//End servo controls
