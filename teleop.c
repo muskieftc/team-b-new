@@ -62,6 +62,29 @@ task main()
 		//End of driving controls code
 
 		//Begin lift controls
+		if ((joy2Btn(4)) && (!joy1Btn(2))) {
+			maxLiftSpeed = 1;
+		}
+		else if ((joy2Btn(2)) && (!joy2Btn(4))) {
+			maxLiftSpeed = 0;
+		}
+
+
+		if (maxLiftSpeed == 1) {
+			liftSpeed = joystick.joy2_y1 / 4;
+		}
+		else {
+			liftSpeed = joystick.joy2_y1;
+		}
+		
+		motor[liftMotor] = liftSpeed;
+		//End lift controls
+
+		//Start servo controls
+		
+
+
+		//End servo controls
 
 	}
 }
