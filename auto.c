@@ -14,12 +14,80 @@
 
 #include "JoystickDriver.c"
 
+void encoderReset()
+{
+	nMotorEncoder[motorLeft] = 0;
+	nMotorEncoder[motorRight] = 0;
+}
+
+void moveForward()
+{
+	motor[motorLeft] = 100;
+	motor[motorRight] = 100;
+}
+
+void moveBackward()
+{
+	motor[motorLeft] = -100;
+	motor[motorRight] = -100;
+}
+
+void stop()
+{
+	motor[motorLeft] = 0;
+	motor[motorRight] = 0;
+}
+
+void goRotations(int rotations)
+{
+	encoderReset();
+
+	while((nMotorEncoder[motorLeft] < 1440 * rotations) && (nMotorEncoder[motorRight] < 1440 * rotations)) {
+		moveForward();
+	}
+	
+	stop();
+
+	encoderReset();
+}
+
+void turnRight(int rotations)
+{
+	encoderReset();
+
+	//Finish this code!
+}
+
 task main()
 {
 
-	waitForStart();
+	int path = 0
 
+	//waitForStart(); //DONT FORGET TO ENABLE THIS AGAIN!!!!!!!!!!!!
+	
+	encoderReset();
 
+	//Go to middle of ring
+
+	goRotations(3);
+
+	//Add code to figure out what path to take here
+	
+
+	//Start the choice
+
+	if(path == 1) {
+		
+	}
+	else if(path == 2) {
+
+	}
+	else if(path == 3) {
+
+	}
+	else {
+
+	}
 
 
 }
