@@ -1,7 +1,8 @@
 #pragma config(Hubs,  S1, HTMotor,  HTServo,  HTMotor,  none)
 #pragma config(Sensor, S1,     ,               sensorI2CMuxController)
-#pragma config(Motor,  mtr_S1_C1_1,     motorLeft,     tmotorTetrix, openLoop)
-#pragma config(Motor,  mtr_S1_C1_2,     motorRight,    tmotorTetrix, openLoop, reversed)
+#pragma config(Sensor, S2,     HTIRS2,         sensorHiTechnicIRSeeker1200)
+#pragma config(Motor,  mtr_S1_C1_1,     motorLeft,     tmotorTetrix, openLoop, encoder)
+#pragma config(Motor,  mtr_S1_C1_2,     motorRight,    tmotorTetrix, openLoop, reversed, encoder)
 #pragma config(Motor,  mtr_S1_C3_1,     motorLift,     tmotorTetrix, openLoop)
 #pragma config(Motor,  mtr_S1_C3_2,     motorG,        tmotorTetrix, openLoop)
 #pragma config(Servo,  srvo_S1_C2_1,    servoA,               tServoStandard)
@@ -39,35 +40,35 @@ void stop()
 	motor[motorRight] = 0;
 }
 
-void goRotations(int rotations)
+void goRotations(float rotations)
 {
 	encoderReset();
 
 	while((nMotorEncoder[motorLeft] < 1440 * rotations) && (nMotorEncoder[motorRight] < 1440 * rotations)) {
 		moveForward();
 	}
-	
+
 	stop();
 
 	encoderReset();
 }
 
-void turnRight(int rotations)
+void turnRight(float rotations)
 {
 	encoderReset();
 
-	while((nMotorEncoder[motorLeft] < 1440 * rotations) && (nMotorEncoder[motorRight] < 1440 * rotations)
+	while((nMotorEncoder[motorRight] < 1440 * rotations) && (nMotorEncoder[motorLeft] < 1440 * rotations))
 	{
 		motor[motorLeft] = 100;
-		mtoor[motorRight] = -100;
+		motor[motorRight] = -100;
 	}
 
 	stop();
-	
+
 	encoderReset();
 }
 
-void turnLeft(int rotations)
+void turnLeft(float rotations)
 {
 	encoderReset();
 
@@ -84,37 +85,40 @@ void turnLeft(int rotations)
 
 task main()
 {
-	int my_num = 123
-	int path = 0
+	int my_num = 123;
+	int path = 1;
 	int direction = 0;
 
 	//tHTIRS2DSPMode _mode = DSP_1200;
 	//direction = HTIRS2readACDir(HTIRS2);
 
 	//waitForStart(); //DONT FORGET TO ENABLE THIS AGAIN!!!!!!!!!!!!
-	
+
 	encoderReset();
-	
+
 	eraseDisplay();
 	nxtDisplayCenteredTextLine(3, "Test=%d", my_num);
 	PlaySound(soundBeepBeep);
 	//Go to middle of ring
 
-	goRotations(3);
-	turnLeft(3);
-	goRotations(3);
-	turnRight(3);
+	goRotations(4);
+	turnLeft(1.75);
+	wait1Msec(500);
 
 	//Add code to figure out what path to take here
-	
+
 
 	//Start the choice
 
 	if(path == 1) {
-		
+		goRotations(3);
+		turnLeft(10);
+		goRotations(4);
+		turnLeft(9);
 	}
 	else if(path == 2) {
-
+		turnLeft(8.5);
+		goRotations(8.2);
 	}
 	else if(path == 3) {
 
